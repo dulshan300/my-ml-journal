@@ -1,6 +1,6 @@
-import './style.scss'
+import './style.scss';
 import Car, { CarType } from './types/car';
-import { Vector, type Point } from './types/primitive';
+import { Vector } from './types/primitive';
 import Road from './types/road';
 
 
@@ -28,12 +28,15 @@ window.addEventListener('resize', init);
 init();
 
 
-const road = new Road(200);
+const road = new Road(3);
 
 // creaing car object
-const car = new Car(new Vector({ x: 0, y: 0 }), CarType.Player);
+const car = new Car(new Vector({ x: road.getLaneCenter(2), y: 0 }), CarType.Player);
 
-// const car2 = new Car({ x: 0, y: 0 }, CarType.PC);
+const car2 = new Car(new Vector({ x: road.getRandomLaneCenter(), y: 0 }), CarType.PC);
+
+console.log(road.lanes, Math.random());
+
 
 
 const draw = () => {
@@ -53,6 +56,9 @@ const draw = () => {
   // Update and draw car
   car.update();
   car.draw(ctx);
+
+  car2.update();
+  car2.draw(ctx);
 
   ctx.restore();
 

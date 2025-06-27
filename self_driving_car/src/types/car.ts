@@ -24,7 +24,7 @@ class Car {
         this.height = 50;
         this.acceleration = 0.2;
         this.maxSpeed = 3;
-        this.minSpeed = -1;
+        this.minSpeed = -2;
         this.angle = 0;
         this.speed = 0;
         this.friction = 0.05;
@@ -159,12 +159,12 @@ class Car {
 
             // left
             if (this.controls.left) {
-                this.angle += flip * (Math.PI / 180);
+                this.angle += flip * (Math.PI / 90);
             }
 
             // right
             if (this.controls.right) {
-                this.angle -= flip * (Math.PI / 180);
+                this.angle -= flip * (Math.PI / 90);
             }
 
         }
