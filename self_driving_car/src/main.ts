@@ -31,7 +31,7 @@ init();
 const road = new Road(200);
 
 // creaing car object
-const car = new Car(new Vector(0, 0), CarType.Player);
+const car = new Car(new Vector({ x: 0, y: 0 }), CarType.Player);
 
 // const car2 = new Car({ x: 0, y: 0 }, CarType.PC);
 

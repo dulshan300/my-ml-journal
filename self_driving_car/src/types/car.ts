@@ -23,7 +23,7 @@ class Car {
         this.width = 30;
         this.height = 50;
         this.acceleration = 0.2;
-        this.maxSpeed = 2;
+        this.maxSpeed = 3;
         this.minSpeed = -1;
         this.angle = 0;
         this.speed = 0;
@@ -93,13 +93,13 @@ class Car {
 
     #setBox() {
 
-        const tl = new Vector(this.loc.x - this.width / 2, this.loc.y - this.height / 2);
+        const tl = new Vector({ x: this.loc.x - this.width / 2, y: this.loc.y - this.height / 2 });
         // bottom left
-        const bl = new Vector(this.loc.x - this.width / 2, this.loc.y + this.height / 2);
+        const bl = new Vector({ x: this.loc.x - this.width / 2, y: this.loc.y + this.height / 2 });
         // bottom right
-        const br = new Vector(this.loc.x + this.width / 2, this.loc.y + this.height / 2);
+        const br = new Vector({ x: this.loc.x + this.width / 2, y: this.loc.y + this.height / 2 });
         // top right
-        const tr = new Vector(this.loc.x + this.width / 2, this.loc.y - this.height / 2);
+        const tr = new Vector({ x: this.loc.x + this.width / 2, y: this.loc.y - this.height / 2 });
 
         tl.subtract(this.loc);
         bl.subtract(this.loc);

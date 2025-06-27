@@ -12,9 +12,9 @@ export class Vector {
     x: number;
     y: number;
 
-    constructor(x: number, y: number) {
-        this.x = x;
-        this.y = y;
+    constructor(point: Point) {
+        this.x = point.x;
+        this.y = point.y;
     }
     add(v: Vector) {
         this.x += v.x;
@@ -35,7 +35,7 @@ export class Vector {
     static toCartesian(polar: Polar) {
         const x = polar.r * Math.cos(polar.theta);
         const y = polar.r * Math.sin(polar.theta);
-        return new Vector(x, y);
+        return new Vector({ x, y });
 
     }
 
