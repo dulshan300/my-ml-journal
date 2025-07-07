@@ -31,9 +31,9 @@ init();
 const road = new Road(3);
 
 // creaing car object
-const car = new Car(new Vector({ x: road.getLaneCenter(2), y: 0 }), CarType.Player);
+const car = new Car({ x: road.getLaneCenter(2), y: 0 }, CarType.Player);
 
-const car2 = new Car(new Vector({ x: road.getRandomLaneCenter(), y: 0 }), CarType.PC);
+const car2 = new Car({ x: road.getRandomLaneCenter(), y: 0 }, CarType.PC);
 
 console.log(road.lanes, Math.random());
 

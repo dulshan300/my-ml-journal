@@ -1,4 +1,4 @@
-import { leap } from "../utils";
+import { lerp } from "../utils";
 
 
 class Road {
@@ -20,7 +20,7 @@ class Road {
         const halfWidth = this.width / 2;
 
         for (let i = 1; i < laneCount; i++) {
-            positions.push(leap(-halfWidth, halfWidth, i / laneCount));
+            positions.push(lerp(-halfWidth, halfWidth, i / laneCount));
         }
 
         return positions;

@@ -1,3 +1,4 @@
+import { polar_to_vector, vector_add, vector_subtract, vector_to_polar } from "../utils";
 import { Vector, type Point } from "./primitive";
 
 export enum CarType {
@@ -7,7 +8,7 @@ export enum CarType {
 }
 
 class Car {
-    loc: Vector;
+    loc: Point;
     width: number;
     height: number;
     acceleration: number;
@@ -18,7 +19,7 @@ class Car {
     controls: { forward: boolean; backward: boolean; left: boolean; right: boolean; };
     angle: any;
     box: { x: number; y: number; }[];
-    constructor(loc: Vector, type: CarType = CarType.PC) {
+    constructor(loc: Point, type: CarType = CarType.PC) {
         this.loc = loc;
         this.width = 30;
         this.height = 50;
@@ -93,38 +94,38 @@ class Car {
 
     #setBox() {
 
-        const tl = new Vector({ x: this.loc.x - this.width / 2, y: this.loc.y - this.height / 2 });
+        const tl: Point = { x: this.loc.x - this.width / 2, y: this.loc.y - this.height / 2 };
         // bottom left
-        const bl = new Vector({ x: this.loc.x - this.width / 2, y: this.loc.y + this.height / 2 });
+        const bl: Point = { x: this.loc.x - this.width / 2, y: this.loc.y + this.height / 2 };
         // bottom right
-        const br = new Vector({ x: this.loc.x + this.width / 2, y: this.loc.y + this.height / 2 });
+        const br: Point = { x: this.loc.x + this.width / 2, y: this.loc.y + this.height / 2 };
         // top right
-        const tr = new Vector({ x: this.loc.x + this.width / 2, y: this.loc.y - this.height / 2 });
+        const tr: Point = { x: this.loc.x + this.width / 2, y: this.loc.y - this.height / 2 };
 
-        tl.subtract(this.loc);
-        bl.subtract(this.loc);
-        br.subtract(this.loc);
-        tr.subtract(this.loc);
+        const base_tl = vector_subtract(tl, this.loc);
+        const base_bl = vector_subtract(bl, this.loc);
+        const base_br = vector_subtract(br, this.loc);
+        const base_tr = vector_subtract(tr, this.loc);
 
-        const ptl = Vector.toPolar(tl);
+        const ptl = vector_to_polar(base_tl);
         ptl.theta -= this.angle;
-        const ntl = Vector.toCartesian(ptl);
-        ntl.add(this.loc);
+        let ntl = polar_to_vector(ptl);
+        ntl = vector_add(ntl, this.loc);
 
-        const pbl = Vector.toPolar(bl);
+        const pbl = vector_to_polar(base_bl);
         pbl.theta -= this.angle;
-        const nbl = Vector.toCartesian(pbl);
-        nbl.add(this.loc);
+        let nbl = polar_to_vector(pbl);
+        nbl = vector_add(nbl, this.loc);
 
-        const pbr = Vector.toPolar(br);
+        const pbr = vector_to_polar(base_br);
         pbr.theta -= this.angle;
-        const nbr = Vector.toCartesian(pbr);
-        nbr.add(this.loc);
+        let nbr = polar_to_vector(pbr);
+        nbr = vector_add(nbr, this.loc);
 
-        const ptr = Vector.toPolar(tr);
+        const ptr = vector_to_polar(base_tr);
         ptr.theta -= this.angle;
-        const ntr = Vector.toCartesian(ptr);
-        ntr.add(this.loc);
+        let ntr = polar_to_vector(ptr);
+        ntr = vector_add(ntr, this.loc);
 
 
         this.box = [
@@ -183,9 +184,6 @@ class Car {
     }
 
     draw(ctx: CanvasRenderingContext2D) {
-
-
-
 
         ctx.beginPath();
         ctx.moveTo(this.box[0].x, this.box[0].y);
