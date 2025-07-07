@@ -1,4 +1,4 @@
-import { polar_to_vector, vector_add, vector_subtract, vector_to_polar } from "../utils";
+import { lerp, polar_to_vector, vector_add, vector_subtract, vector_to_polar } from "../utils";
 import { Vector, type Point } from "./primitive";
 
 export enum CarType {
@@ -19,6 +19,10 @@ class Car {
     controls: { forward: boolean; backward: boolean; left: boolean; right: boolean; };
     angle: any;
     box: { x: number; y: number; }[];
+    sensorCount: number;
+    sensorRadius: number;
+    controlType: CarType;
+    sensorArray: number[];
     constructor(loc: Point, type: CarType = CarType.PC) {
         this.loc = loc;
         this.width = 30;
@@ -36,10 +40,20 @@ class Car {
             right: false,
         }
 
+        this.sensorCount = 5;
+        this.sensorRadius = 100;
+        this.sensorArray = [];
+
         this.box = [];
+        this.controlType = type;
 
         if (type === CarType.Player) {
             this.#addEventListeners();
+
+            // generate sensor array
+            for (let i = 1; i <= this.sensorCount; i++) {
+                this.sensorArray.push(lerp(-Math.PI, 0, i * 1 / (this.sensorCount + 1)))
+            }
         }
 
         if (type === CarType.PC) {
@@ -141,6 +155,24 @@ class Car {
         ];
     }
 
+    #drawSensors(ctx: CanvasRenderingContext2D) {
+
+        this.sensorArray.forEach(t => {
+            ctx.beginPath()
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = "yellow";
+            ctx.moveTo(this.loc.x, this.loc.y);
+            let sp = vector_subtract({ x: this.loc.x, y: this.loc.y - this.sensorRadius }, this.loc)
+            const spo = vector_to_polar(sp);
+            spo.theta = (-this.angle + t);
+            sp = polar_to_vector(spo);
+
+            ctx.lineTo(this.loc.x + sp.x, this.loc.y + sp.y)
+            ctx.stroke()
+        })
+
+    }
+
     update() {
         // console.log(this.controls);
 
@@ -193,6 +225,14 @@ class Car {
         ctx.closePath();
         ctx.fillStyle = "red";
         ctx.fill();
+
+        // draw sensors
+
+        if (this.controlType == CarType.Player) {
+            this.#drawSensors(ctx);
+        }
+
+
 
 
     }

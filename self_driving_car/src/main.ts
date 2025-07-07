@@ -35,7 +35,7 @@ const car = new Car({ x: road.getLaneCenter(2), y: 0 }, CarType.Player);
 
 const car2 = new Car({ x: road.getRandomLaneCenter(), y: 0 }, CarType.PC);
 
-console.log(road.lanes, Math.random());
+
 
 
 
@@ -53,12 +53,13 @@ const draw = () => {
   // Draw road
   road.draw(ctx);
 
-  // Update and draw car
-  car.update();
-  car.draw(ctx);
 
   car2.update();
   car2.draw(ctx);
+
+  // Main car drawing
+  car.update();
+  car.draw(ctx);
 
   ctx.restore();
 

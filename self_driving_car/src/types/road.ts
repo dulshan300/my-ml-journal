@@ -73,6 +73,9 @@ class Road {
             ctx.lineTo(lanePos, renderHeight);
             ctx.stroke();
         });
+        
+        ctx.setLineDash([]);
+        
 
 
     }
