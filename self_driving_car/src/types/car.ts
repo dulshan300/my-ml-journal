@@ -1,5 +1,5 @@
 import { lerp, polar_to_vector, vector_add, vector_subtract, vector_to_polar } from "../utils";
-import { Vector, type Point } from "./primitive";
+import { type Point } from "./primitive";
 
 export enum CarType {
     Player,
@@ -23,6 +23,7 @@ class Car {
     sensorRadius: number;
     controlType: CarType;
     sensorArray: number[];
+
     constructor(loc: Point, type: CarType = CarType.PC) {
         this.loc = loc;
         this.width = 30;
@@ -40,7 +41,7 @@ class Car {
             right: false,
         }
 
-        this.sensorCount = 5;
+        this.sensorCount = 7;
         this.sensorRadius = 100;
         this.sensorArray = [];
 
